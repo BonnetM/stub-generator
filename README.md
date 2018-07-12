@@ -123,3 +123,7 @@ fun `with magic`() {
     verifyZeroInteractions(ifTrue)
 }
 ```
+## Known limitations
+
+For now, arrays are not supported.
+
