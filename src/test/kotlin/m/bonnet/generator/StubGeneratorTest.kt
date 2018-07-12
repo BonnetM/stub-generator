@@ -34,6 +34,16 @@ class StubGeneratorTest {
         assertThat(createdStub).isEqualTo(expected)
     }
 
+    @Test
+    fun `create when class has two user defined class as parameters should work fine`() {
+        // When
+        val createdStub = StubGenerator.create(WithMultipleCustomClasses::class)
+
+        // Then
+        val expected = WithMultipleCustomClasses(CustomClass(0), CustomClass(0))
+        assertThat(createdStub).isEqualTo(expected)
+    }
+
     @Test(expected = IllegalStateException::class)
     fun `create when class has a circular dependency should throw exception`() {
         // When
@@ -50,12 +60,12 @@ class StubGeneratorTest {
 
         // Then
         val expected = OnlyCommonCollections(
-            emptyList(),
-            mutableListOf(),
-            emptySet(),
-            mutableSetOf(),
-            emptyMap(),
-            mutableMapOf()
+                emptyList(),
+                mutableListOf(),
+                emptySet(),
+                mutableSetOf(),
+                emptyMap(),
+                mutableMapOf()
         )
         assertThat(createdStub).isEqualTo(expected)
     }
@@ -94,19 +104,24 @@ class StubGeneratorTest {
 interface NoPrimaryConstructor
 
 data class OnlyPrimitive(
-    val double: Double,
-    val float: Float,
-    val long: Long,
-    val int: Int,
-    val short: Short,
-    val byte: Byte,
-    val boolean: Boolean,
-    val char: Char,
-    val string: String
+        val double: Double,
+        val float: Float,
+        val long: Long,
+        val int: Int,
+        val short: Short,
+        val byte: Byte,
+        val boolean: Boolean,
+        val char: Char,
+        val string: String
 )
 
 data class WithCustomClass(
-    val customClass: CustomClass
+        val customClass: CustomClass
+)
+
+data class WithMultipleCustomClasses(
+        val customClass: CustomClass,
+        val secondCustomClass: CustomClass
 )
 
 data class CustomClass(val i: Int)
@@ -114,18 +129,18 @@ data class CustomClass(val i: Int)
 data class Circular(val next: Circular)
 
 data class OnlyCommonCollections(
-    val intList: List<Int>,
-    val mutIntList: MutableList<Int>,
-    val stringSet: Set<String>,
-    val mutStringSet: MutableSet<String>,
-    val doubleMap: Map<Double, Double>,
-    val mutDoubleMap: MutableMap<Double, Double>
+        val intList: List<Int>,
+        val mutIntList: MutableList<Int>,
+        val stringSet: Set<String>,
+        val mutStringSet: MutableSet<String>,
+        val doubleMap: Map<Double, Double>,
+        val mutDoubleMap: MutableMap<Double, Double>
 )
 
 data class WithNullable(
-    val nullable: Int?
+        val nullable: Int?
 )
 
 data class WithInterface(
-    val noPrimaryConstructor: NoPrimaryConstructor
+        val noPrimaryConstructor: NoPrimaryConstructor
 )

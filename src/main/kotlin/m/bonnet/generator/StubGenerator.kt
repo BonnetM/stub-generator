@@ -1,18 +1,34 @@
 package m.bonnet.generator
 
-import kotlin.reflect.KClass
-import kotlin.reflect.KParameter
-import kotlin.reflect.KType
-import kotlin.reflect.KTypeProjection
-import kotlin.reflect.KVariance
+import kotlin.reflect.*
 import kotlin.reflect.full.createType
 import kotlin.reflect.full.isSupertypeOf
 import kotlin.reflect.full.primaryConstructor
 import kotlin.reflect.full.starProjectedType
 import kotlin.reflect.jvm.jvmErasure
 
-object StubGenerator {
+/**
+ * Creates an instance of type [T] with default values
+ *
+ * @param T the type to be created
+ * @return an instance of type [T] which is constructed with default values
+ * @throws IllegalStateException if an instance cannot be constructed
+ */
 
+inline fun <reified T : Any> createStub(): T {
+    return StubGenerator.create(T::class)
+}
+
+object StubGenerator {
+    /**
+     * Creates an instance of [KC] with default values
+     *
+     * @param T the type to be created
+     * @param KC the KClass type associated with [T]
+     * @param kClass the KClass of type [T] to be created
+     * @return an instance of [KC] which is constructed with default values
+     * @throws IllegalStateException if an instance cannot be constructed
+     */
     fun <T : Any, KC : KClass<T>> create(kClass: KC): T {
         kClass.primaryConstructor?.let { constructor ->
             val arguments = constructor.parameters.map { it to getParameterDefaultValue(it, listOf(kClass)) }
@@ -25,7 +41,7 @@ object StubGenerator {
             throw IllegalStateException("Type circular depedency, cannot create value for $kClassAny")
         }
         val constructor = kClassAny.constructors.firstOrNull()
-            ?: throw IllegalStateException("Cannot create a stub without a constructor for class $kClassAny")
+                ?: throw IllegalStateException("Cannot create a stub without a constructor for class $kClassAny")
         val arguments = constructor.parameters.map { it to getParameterDefaultValue(it, creatingValueOf.plus(kClassAny)) }
         return constructor.callBy(arguments.toMap())
     }
@@ -61,8 +77,4 @@ object StubGenerator {
             else -> createAny(kType.jvmErasure, creatingValueOf)
         }
     }
-}
-
-inline fun <reified T : Any> createStub(): T {
-    return StubGenerator.create(T::class)
 }
