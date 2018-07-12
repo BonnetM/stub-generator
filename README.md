@@ -1,5 +1,3 @@
-# STUB-GENERATOR
-
 ## Introduction
 
 A library to build data classes with default values. It can help you use your data classes in test without mocking them.
@@ -17,6 +15,27 @@ You can then set the properties you want, using the data classes' `copy` functio
 val myCustomPojo = createStub<HugePojo>().copy(usefulBoolean = true)à
 ```
 
+## Get it
+
+[![](https://jitpack.io/v/BonnetM/stub-generator.svg)](https://jitpack.io/#BonnetM/stub-generator)
+
+Add jitpack dependency :
+
+```
+allprojects {
+	repositories {
+		...
+		maven { url 'https://jitpack.io' }
+	}
+}
+```
+Add the library dependency :
+
+```
+dependencies {
+    implementation 'com.github.BonnetM:stub-generator:-SNAPSHOT'
+}
+```
 ## Example
 
 The data classes :
