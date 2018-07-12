@@ -1,6 +1,6 @@
 ## Introduction
 
-A library to build data classes with default values. It can help you use your data classes in test without mocking them.
+A library to build data classes with default values. It can help you use your data classes in tests without mocking them.
 
 ## How to use
 
