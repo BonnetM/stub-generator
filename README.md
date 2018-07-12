@@ -12,7 +12,7 @@ This creates a `HugePojo` with its values set to default values.
 You can then set the properties you want, using the data classes' `copy` function :
 
 ```
-val myCustomPojo = createStub<HugePojo>().copy(usefulBoolean = true)à
+val myCustomPojo = createStub<HugePojo>().copy(usefulBoolean = true)
 ```
 
 ## Get it
