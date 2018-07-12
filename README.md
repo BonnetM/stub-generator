@@ -33,7 +33,7 @@ Add the library dependency :
 
 ```
 dependencies {
-    implementation 'com.github.BonnetM:stub-generator:-SNAPSHOT'
+    implementation 'com.github.BonnetM:stub-generator:v1.0'
 }
 ```
 ## Example
