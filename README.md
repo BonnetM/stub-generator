@@ -4,14 +4,14 @@ A library to build data classes with default values. It can help you use your da
 
 ## How to use
 
-```
+```kotlin
 val hugePojo = createStub<HugePojo>()
 ```
 
 This creates a `HugePojo` with its values set to default values.
 You can then set the properties you want, using the data classes' `copy` function :
 
-```
+```kotlin
 val myCustomPojo = createStub<HugePojo>().copy(usefulBoolean = true)
 ```
 
@@ -40,7 +40,7 @@ dependencies {
 
 The data classes :
 
-```
+```kotlin
 data class HugePojo(
     val uselessIntA: Int,
     val uselessIntB: Int,
@@ -67,7 +67,7 @@ data class OtherOtherPojo(val i : List<Int>)
 
 The class to be tested
 
-```
+```kotlin
 class ClassUnderTest(private val ifTrue: IfTrue, private val ifFalse: IfFalse) {
     fun compute(hugePojo: HugePojo) {
         if (hugePojo.usefulBoolean) {
@@ -80,7 +80,7 @@ class ClassUnderTest(private val ifTrue: IfTrue, private val ifFalse: IfFalse) {
 ```
 Its unit test, in vanilla kotlin:
 
-```
+```kotlin
 @Test
 fun `vanilla kotlin`() {
     val hugePojo = HugePojo(
@@ -112,7 +112,7 @@ fun `vanilla kotlin`() {
 
 And with the library :
 
-```
+```kotlin
 @Test
 fun `with magic`() {
     val hugePojo = createStub<HugePojo>().copy(usefulBoolean = false)
